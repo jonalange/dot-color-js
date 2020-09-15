@@ -1,0 +1,26 @@
+{
+  "name": "dot-color",
+  "version": "1.0.0",
+  "description": "Modern JavaScript color conversion. That uses setters and getters under the hood to make life simple.",
+  "main": "dot-color.js",
+  "scripts": {
+    "test": "node test/index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/draganradu/dot-color-js.git"
+  },
+  "keywords": [
+    "dot",
+    "color"
+  ],
+  "author": "Radu Dragan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/draganradu/dot-color-js/issues"
+  },
+  "homepage": "https://github.com/draganradu/dot-color-js#readme",
+  "dependencies": {
+    "color_library": "0.0.2"
+  }
+}
