@@ -7,8 +7,11 @@ const convertColor = require("./convert_color")
 class abstractColor {
     constructor() {
         this.exclusionRegex = {
-            hex: /magenta|grayscale|pantone|ral|mono|blue|cmyk|panton|dark/gi,
-            grayscale: /#/gi
+            cmyk: /hex/g,
+            hex: /magenta|grayscale|pantone|ral|mono|blue|cmyk|panton|dark|w|lab|hsl|hsv|([0-9]\w)\s([0-9]\w)\s([0-9]\w)/g,
+            grayscale: /#|pantone/g,
+            pantone: /w/g,
+            rgb: /xyz|lab|hsl|yuv/g,
         }
     }
 
@@ -42,6 +45,8 @@ class abstractColor {
 
     exclude(colorVal, colorName) {
         switch (colorName) {
+            case "cmyk":
+                return (colorVal.match(this.exclusionRegex.cmyk)) ? false : true
             case "hex3":
             case "hex4":
             case "hex6":
@@ -52,7 +57,11 @@ class abstractColor {
             case "rgbdecimal":
                 var colorLenght = colorVal.split(/[^0-9a-z]/)
                 var indexOfDeciaml = colorVal.indexOf('rgb') > -1 || colorVal.indexOf('decimal') > -1
-                return (colorLenght.length > 2 && !indexOfDeciaml) ? false : true    
+                return (colorLenght.length > 2 && !indexOfDeciaml) ? false : true  
+            case "pantone": 
+                return (colorVal.match(this.exclusionRegex.pantone)) ?  false : true   
+            case "rgb":   
+                return (colorVal.match(this.exclusionRegex.rgb)) ?  false : true     
             default:
                 return false
         }
@@ -68,7 +77,7 @@ class colorIdentify extends abstractColor {
 
     get cmyk() {
         const { cmyk } = this.raw
-        if (cmyk) {
+        if (cmyk && this.exclude(this.input, 'cmyk')) {
             for (const i of 'cmyk') {
                 cmyk[i] = this.abstractMakeInt(cmyk[i])
                 if (isNaN(cmyk[i]) || cmyk[i] < 0 || cmyk[i] > 100) {
@@ -84,6 +93,14 @@ class colorIdentify extends abstractColor {
     falseCmyk(stringCmyk) {
         let cmykArray = stringCmyk.replace(/[a-z]/g, '').split(/[^0-9]/)
         if (cmykArray.length === 4) {
+            return true
+        }
+        return false
+    }
+
+    falseRgb(stringCmyk) {
+        let cmykArray = stringCmyk.replace(/[a-z]/g, '').split(/[^0-9]/)
+        if (cmykArray.length === 3) {
             return true
         }
         return false
@@ -184,7 +201,7 @@ class colorIdentify extends abstractColor {
 
     get pantone() {
         const { pantone } = this.raw
-        if (pantone) {
+        if (pantone && this.exclude(this.input, 'pantone')) {
             if (pantone <= 5875 && pantone >= 100) {
                 return pantone
             }
@@ -203,7 +220,7 @@ class colorIdentify extends abstractColor {
 
     get rgb() {
         const { rgb } = this.raw
-        if (rgb) {
+        if (rgb && this.exclude(this.input, 'rgb')) {
             for (const i of 'rgb') {
                 rgb[i] = this.abstractMakeInt(rgb[i], 255)
                 if (isNaN(rgb[i]) || rgb[i] < 0 || rgb[i] > 255) {
@@ -321,6 +338,11 @@ module.exports = function (input, forceFormat) {
     if (identify.falseCmyk(input)) {
         return 'cmyk'
     }
+
+    if (identify.falseRgb(input)) {
+        return 'rgb'
+    }
+
 
     return false
 }

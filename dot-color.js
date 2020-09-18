@@ -4,7 +4,6 @@ const identify = require('./components/identify')
 const AcceptedColors = require('./components/accepted_colors')
 const convertColor = require('./components/convert_color')
 
-
 const colorFrame = {
     clone: function (data) {
 

@@ -43,6 +43,15 @@ class indexColor {
         return false
     }
 
+    fallbackIndex (string, type) {
+        if(string === 'cmyk' || string === 'rgb' ) {
+            // return type.match(/([0-9]\w)/g)
+            return type.match(/\d+/g)
+        }
+
+        return false
+    }
+
     abstractIndex(string, type) {
         let temp = []
 
@@ -52,6 +61,11 @@ class indexColor {
         }
 
         temp = this.partialIndex(type, string)
+        if (temp && temp.length === type.length) {
+            return temp
+        }
+
+        temp = this.fallbackIndex(type, string)
         if (temp && temp.length === type.length) {
             return temp
         }
@@ -97,7 +111,7 @@ class colorHelper {
         let { raw } = this
 
         if (typeof raw === 'string') {
-            raw = (this.reindex[colorKey]) ? this.reindex[colorKey](raw) : this.reindex.abstractIndex(raw, colorKey)
+            raw = this.reindex.abstractIndex(raw, colorKey)
         }
         if (Array.isArray(raw) && raw.length === colorKey.length) {
             raw = this.arrayToObject(raw, colorKey)
@@ -137,7 +151,7 @@ class abstractSanitizer extends colorHelper {
         let { raw } = this
 
         if (typeof raw === 'string') {
-            const rawLong = raw.replace(/android|hex3|hex4|hex6|hex8|hex|0x|ox|grayscale|g|mono|[^a-z0-9]|/gi, '').trim()
+            const rawLong = raw.replace(/android|hex3|hex4|hex6|hex8|hex|0x|ox|grayscale|g|mono|[^a-z0-9]|/g, '').trim()
             const rawShort = rawLong.replace(/[^0-9]/g, '')
             if (rawLong && rawShort) {
                 if ((rawLong.length < 3 && rawShort <= 100) || rawShort == 100) {
@@ -153,11 +167,11 @@ class abstractSanitizer extends colorHelper {
         let { raw } = this
         if (typeof raw === 'string') {
             // if (!this.cmyk && !this.hsl && !this.hsv && !this.lab && !this.rgb && !this.rgba && !this.xyz && !this.yuv) {
-            //     const rawText = raw.replace(/android|hex3|hex4|hex6|hex8|hex|0x|ox|[^a-z^0-9]/gi, '')
-            //     const rawHex = rawText.replace(/[^a-f0-9]/gi, '')
+            //     const rawText = raw.replace(/android|hex3|hex4|hex6|hex8|hex|0x|ox|[^a-z^0-9]/g, '')
+            //     const rawHex = rawText.replace(/[^a-f0-9]/g, '')
             //     return ((rawText.length / 2) > rawHex.length) ? false : rawHex
             // }
-            return raw.replace(/android|hex3|hex4|hex6|hex8|hex|0x|ox|[^a-f0-9]/gi, '')
+            return raw.replace(/android|hex3|hex4|hex6|hex8|hex|0x|ox|[^a-f0-9]/g, '')
         }
 
         return false
@@ -171,7 +185,7 @@ class abstractSanitizer extends colorHelper {
     get html() {
         let { raw } = this
         if (raw) {
-            return raw.toLowerCase().replace(/[^a-z]|html|color/gi, '')
+            return raw.toLowerCase().replace(/[^a-z]|html|color/g, '')
         }
         return false
     }
@@ -191,7 +205,7 @@ class abstractSanitizer extends colorHelper {
     get pantone() {
         let { raw } = this
         if (raw) {
-            return this.reindex.makeInt(this.raw.replace(/[^0-9]/gi, ''))
+            return this.reindex.makeInt(this.raw.replace(/[^0-9]/g, ''))
         }
         return false
     }
@@ -199,7 +213,7 @@ class abstractSanitizer extends colorHelper {
     get ral() {
         let { raw } = this
         if (raw) {
-            return raw.toLowerCase().replace(/[^a-z0-9]|ral|color/gi, '')
+            return raw.toLowerCase().replace(/[^a-z0-9]|ral|color/g, '')
         }
         return false
     }

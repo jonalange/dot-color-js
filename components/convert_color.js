@@ -28,7 +28,7 @@ const helpers = {
 
     sanitizeString: function (val) {
         if (val && typeof val === 'string') {
-            return val.toLowerCase().replace(/[^a-z0-9]/gi, '')
+            return val.toLowerCase().replace(/[^a-z0-9]/g, '')
         } else if (typeof val === "number") {
             return val.toString()
         }

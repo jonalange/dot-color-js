@@ -16,15 +16,45 @@ const simpleColor = require('simple_color_object');
 const redColor = new simpleColor("rgb 255 0 0")
 console.log(redColor.html) // red
 
-// empty init
-const emptyColorObject = new simpleColor()
-emptyColor.rgb("rgb 255 0 0")
-console.log(emptyColor.html) // red
-
-
-
-
 ```
 
 # how to set color
-Because we use setter and getters for allthe html 
+Because we use setter and getters you can init the class with no arguments and then just set the color to any color. The colors most be valid for that key.
+
+```javascript
+const simpleColor = require('simple_color_object');
+
+// empty init
+const emptyColorObject = new simpleColor()
+emptyColor.rgb = "rgb 255 0 0"
+console.log(emptyColor.html) // red
+
+```
+
+How to set a color that you do not know the format, or may not be valid for that key.
+
+```javascript
+const simpleColor = require('simple_color_object');
+
+// if you set the color to
+const emptyColorObject = new simpleColor()
+emptyColor.color = "rgb 255 0 0"
+console.log(emptyColor.html) // red
+
+```
+
+# Common 
+Setting wrong format.
+```javascript
+const simpleColor = require('simple_color_object');
+
+// if you set the color to
+const emptyColorObject = new simpleColor()
+emptyColor.cmyk = "rgb 255 0 0"
+console.log(emptyColor.html) // false
+
+// simplest fix but using the .color setter instead of .rgb key runs the identify method.
+emptyColor.color = "rgb 255 0 0"
+console.log(emptyColor.html) // rgb
+
+```

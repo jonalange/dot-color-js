@@ -4,7 +4,8 @@
   "description": "Modern JavaScript color conversion. That uses setters and getters under the hood to make life simple.",
   "main": "dot-color.js",
   "scripts": {
-    "test": "node test/index.test.js"
+    "test": "node test/index.test.js",
+    "one": "node test/one.test.js"
   },
   "repository": {
     "type": "git",
