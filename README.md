@@ -1,12 +1,16 @@
-# Dot color js
+
+![build passing](https://travis-ci.org/draganradu/dot-color.svg?branch=master) ![License](https://img.shields.io/npm/l/dot-color) ![maintained](https://img.shields.io/maintenance/yes/2020) ![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/dot-color) ![Node Version](https://img.shields.io/node/v/dot-color)
+# Dot color JS
+
+| demo coming soon |
 
 This is a modernized version of [simple-color](https://www.npmjs.com/package/simple-color-converter) it uses modern javascript getters and setters and all sorts of javascript goodness to make one of the lightest but most feature dense color convertors for javascript you can find on NPM.
 
 ## How to use
 ```javascript
 
-const simpleColor = require('dot-color-js');
-cosnt color = new simpleColor()
+const dotColor = require("dot-color")
+const color = new dotColor()
 
 color.cmyk = "cmyk 0 50 60 60"
 console.log(color.ral) // {lrv: 5, name: "Red Brown", ral: 8012}

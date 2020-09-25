@@ -1,6 +1,6 @@
 {
   "name": "dot-color",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Modern JavaScript color conversion. That uses setters and getters under the hood to make life simple.",
   "main": "dot-color.js",
   "scripts": {
@@ -13,8 +13,12 @@
   },
   "keywords": [
     "dot",
-    "color"
+    "color",
+    "modern color converter"
   ],
+  "engines": {
+    "node": ">= 0.6"
+  },
   "author": "Radu Dragan",
   "license": "MIT",
   "bugs": {

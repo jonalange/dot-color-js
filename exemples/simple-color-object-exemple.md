@@ -5,7 +5,7 @@ We will never add braking changes to this project. If there is something so spec
 ## install
 As long as your project runs NPM its as simple as installing the project
 ```javascript
-npm install dot-color-js
+$ npm install dot-color-js
 ```
 
 ## Initialize
