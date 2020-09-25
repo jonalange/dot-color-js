@@ -121,6 +121,8 @@ class colorHelper {
             for (const i of colorKey) {
                 if (!raw[i]) {
                     return false
+                } else {
+                    raw[i] = this.abstractMakeInt(raw[i])
                 }
             }
 

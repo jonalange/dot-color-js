@@ -68,3 +68,5 @@
  | c: 10 m:20 k:50 y:6 | cmyk: c,10,k,50,m,20,y,6 | 
  | g: 30 | format: grayscale | 
  | g: 30 | cmyk: c,0,k,30,m,0,y,0 | 
+ | rgb 0 255 0 | format: rgb | 
+ | rgb 0 255 0 | rgb: b,0,g,255,r,0 | 

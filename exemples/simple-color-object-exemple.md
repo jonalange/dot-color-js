@@ -2,12 +2,15 @@
 We will never add braking changes to this project. If there is something so spectacular that it needs bracking changes we will make a spinof of the project.
 
 
-## how to install
+## install
 As long as your project runs NPM its as simple as installing the project
+```javascript
+npm install dot-color-js
+```
 
-## how to init
-First you need to requier the package then init the class as any other class.
-You can init it empty and the set a new color or declare a color from the start.
+## Initialize
+First you need to requier the package then init the class as any other javascript class.
+You can init it empty and the set a new color or declare a color from the start. Because we are using getters and setters it dose not matter.
 
 ```javascript
 const simpleColor = require('simple_color_object');
@@ -18,7 +21,7 @@ console.log(redColor.html) // red
 
 ```
 
-# how to set color
+# Set color
 Because we use setter and getters you can init the class with no arguments and then just set the color to any color. The colors most be valid for that key.
 
 ```javascript
@@ -28,6 +31,10 @@ const simpleColor = require('simple_color_object');
 const emptyColorObject = new simpleColor()
 emptyColor.rgb = "rgb 255 0 0"
 console.log(emptyColor.html) // red
+
+empltyColor.color = "rgb 0 255 0"
+console.log(emptyColor.html) // red
+
 
 ```
 
