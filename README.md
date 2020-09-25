@@ -1,5 +1,5 @@
 
-![build passing](https://travis-ci.org/draganradu/dot-color.svg?branch=master) ![License](https://img.shields.io/npm/l/dot-color) ![maintained](https://img.shields.io/maintenance/yes/2020) ![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/dot-color) ![Node Version](https://img.shields.io/node/v/dot-color)
+![build passing](https://travis-ci.org/draganradu/dot-color-js.svg?branch=master) ![License](https://img.shields.io/npm/l/dot-color) ![maintained](https://img.shields.io/maintenance/yes/2020) ![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/dot-color) ![Node Version](https://img.shields.io/node/v/dot-color)
 # Dot color JS
 
 | demo coming soon |
