@@ -17,7 +17,7 @@
     "modern color converter"
   ],
   "engines": {
-    "node": ">= 0.6"
+    "node": ">= 0.7"
   },
   "author": "Radu Dragan",
   "license": "MIT",
