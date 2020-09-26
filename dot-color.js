@@ -30,6 +30,7 @@ class objectiveColor {
         delete this.sanitizedColor
         if (inputColor) {
             this.format = (setFormat) ? ((identify(inputColor, setFormat)) ? setFormat : false) : identify(inputColor)
+            
             if (this.format) {
                 this.sanitizedColor = sanitize(inputColor, this.format)
             } else {
