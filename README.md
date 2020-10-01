@@ -2,7 +2,7 @@
 ![build passing](https://travis-ci.org/draganradu/dot-color-js.svg?branch=master) ![License](https://img.shields.io/npm/l/dot-color) ![maintained](https://img.shields.io/maintenance/yes/2020) ![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/dot-color) ![Node Version](https://img.shields.io/node/v/dot-color)
 # Dot color JS
 
-| demo coming soon |
+[Demo](http://fotodex.ro/)
 
 This is a modernized version of [simple-color](https://www.npmjs.com/package/simple-color-converter) it uses modern JavaScript getters and setters and all sorts of JavaScript goodness to make one of the lightest but most feature dense color convertors for JavaScript you can find on NPM.
 

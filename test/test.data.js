@@ -76,6 +76,8 @@ module.exports = [
 
     ['yuv 20 20 4', {format: 'yuv'}],
 
+    ['black', { format: 'html' }],
+    ['bac', { format: 'hex3' }],
     ['nimic', { format: false }],
     ['c: 10 m:20 k:50 y:6', { format: 'cmyk', cmyk: { c: 10, m: 20, k: 50, y: 6 } }],
     ['g: 30', { format: 'grayscale', cmyk: { c: 0, m: 0, k: 30, y: 0 }}],

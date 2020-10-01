@@ -8,7 +8,7 @@ class abstractColor {
     constructor() {
         this.exclusionRegex = {
             cmyk: /hex/g,
-            hex: /magenta|grayscale|pantone|ral|mono|blue|cmyk|panton|dark|w|lab|hsl|hsv|rgb|([0-9]\w)\s([0-9]\w)\s([0-9]\w)/g,
+            hex: /(?![hxo])[g-z]|([0-9]\w)\s([0-9]\w)\s([0-9]\w)/ig,
             grayscale: /#|pantone/g,
             pantone: /w|rgb/g,
             rgb: /xyz|lab|hsl|yuv/g,
