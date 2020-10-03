@@ -17,6 +17,7 @@ color.cmyk = "cmyk 0 50 60 60"
 console.log(color.ral) // {lrv: 5, name: "Red Brown", ral: 8012}
 
 color.rgb = "rgb 10 60 240"
+color.rgb = {r: "10", g: "60", b: "240" }
 console.log(color.ral) // {lrv: 4, name: "Ultramarine Blue", ral: 5002}
 
 
@@ -28,7 +29,7 @@ console.log(color.cmyk) // {c: 96, k: 6, m: 75, y: 0}
 ```
 
 ## Supported colors
-The main thing we do better then any other color convertor is the ability to get any string and figure out if there is a color berried in there. We desined this package to be used behined an input field where the values can range from RED to CMYK 30 20 10 5 and even C 30 K 5 M 20 Y 10. The rule is: if you can read it as a color we identify it as a color.
+The main thing we do better then any other color convertor is the ability to get any string and figure out if there is a color buried in there. We designed this package to be used behined an input field where the values can range from "RED" to "CMYK 30 20 10 5" and even "C 30 K 5 M 20 Y 10". The rule is: if you can read it as a color we identify it as a valid color.
 
 [Accepted colors input test](exemple_color.md)
 
@@ -56,25 +57,29 @@ The main thing we do better then any other color convertor is the ability to get
 ## Ambiguous Color
 We do not have a lot of ambiguous situations, but due to the nature of string interpetation we have to default some time.We want to be diligent and document all of the ambigous colors.
 
-###### Pantone (shorthand) VS hex3 (shorthand)
+##### Pantone (shorthand) VS hex3 (shorthand)
 **100C** is hex3
 100C could be Pantone 100C or #100C. In this case it is more likely to be hex3 so we decided for the hex as long as there is no pantone key.
 
-###### Grayscale 100 VS hex3 (no hash) 100
+##### Grayscale 100 VS hex3 (no hash) 100
 **100** is grayscale
 100 could be Pantone 100C or hex #100 or grayscale 100. In this case we go to grayscale because it would complety exclude grayscale 100% 
 
-###### CMYK (shorthand) VS any 4 group shorthand.
+##### CMYK (shorthand) VS any 4 group shorthand.
 **10 30 40 10** is CMYK 
 We default any group of 4 to CMYK if there is no indication (keys) that it would be any other.
 
-###### RGB (shorthand) VS any 3 group shorthand.
+##### RGB (shorthand) VS any 3 group shorthand.
 **10 30 40** is RGB
 We default any group of 4 to RGB if there is no indication (keys) that it would be any other.
 
-###### grayscale (shorthand) VS any 1 group shorthand.
+##### grayscale (shorthand) VS any 1 group shorthand.
 **10** is grayscale
 We default any group of 1 to grayscale if there is no indication (keys) that it would be any other.
+
+##### hex3 VS html.
+**black, Antique White, etc** is html
+There are 61 html colors that contain a hex valid pattern /[0-9a-f]{2}){4}|[0-9a-f]{2}){3}|([0-9a-f]){4}|([0-9a-f]){3}/gi in order to fix this any string that contains (?![hxo])[g-z] pattern will be excluded from being valid hex.
 
 ## Other features
 ```javascript
@@ -106,4 +111,4 @@ Copyright © 2020, Radu Dragan. Licensed under the [MIT License](https://github.
 
 ## Thank you
 
-I`m Radu, Thank you for using my color convertor, I hope it is useful for you. I genuinely excited to build this kind of solutions.
+I`m Radu, Thank you for using my color convertor, I hope it is useful for you. I'm genuinely excited to build this kind of solutions.

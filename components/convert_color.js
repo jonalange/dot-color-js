@@ -104,6 +104,31 @@ const colorConvert = {
         }
     },
 
+    convert: function ({ from, to, color, pretty = false }) {
+        const stepsToConvert = this.stepsToConvert({ from: from, to: to })
+        
+        if (stepsToConvert) {
+            for (let i = 0; i < stepsToConvert.length - 1; i++) {
+                if (color) {
+                    const fromStep = stepsToConvert[i]
+                    const toStep = stepsToConvert[i + 1]
+                    color = this[fromStep][toStep](color)
+                }
+            }
+        }
+
+        if (pretty && color) {
+            if(to.indexOf('hex') > -1){
+                color = `#${color}`
+            } else if (to === 'html') {
+                let _this = color.toString().replace(/([A-Z])/g, ' $1').trim()
+                color = _this.charAt(0).toUpperCase() + _this.slice(1)
+            }
+        }
+
+        return color
+    },
+
     cmyk: {
         rgb: function (cmyk) {
             return {
@@ -389,7 +414,7 @@ const colorConvert = {
         cmyk: function (pantoneInput) {
             const _this = helpers.pullDataFromList2({
                 listOfColors: pantone,
-                lookingFor: pantoneInput + "c",
+                lookingFor: pantoneInput.replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
             })
             return (_this) ? _this.cmyk : false
@@ -398,7 +423,7 @@ const colorConvert = {
         rgb: function (pantoneInput) {
             const _this = helpers.pullDataFromList2({
                 listOfColors: pantone,
-                lookingFor: pantoneInput + "c",
+                lookingFor: pantoneInput.replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
             })
             return (_this) ? _this.rgb : false
@@ -407,7 +432,7 @@ const colorConvert = {
         lab: function (pantoneInput) {
             const _this = helpers.pullDataFromList2({
                 listOfColors: pantone,
-                lookingFor: pantoneInput + "c",
+                lookingFor: pantoneInput.replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
             })
             return (_this) ? _this.lab : false
@@ -731,7 +756,7 @@ const colorConvert = {
 Object.defineProperty(colorConvert, "stepsToConvert", {
     enumerable: false,
     writable: false,
-    value: function (from, to) {
+    value: function ({from, to}) {
         if (from === to) {
             return false
         }

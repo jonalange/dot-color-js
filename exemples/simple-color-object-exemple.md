@@ -2,6 +2,7 @@
 I will start by saying we will never add braking changes to this project. If there is something so spectacular that it needs breaking changes we will make a spin off of the project.
 This documentation will evolve if we add some new features but we will not have anything deprecated, ever.
 
+[The official demo is here.](http://fotodex.ro/)
 
 ## Install
 ```javascript
