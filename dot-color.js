@@ -239,20 +239,20 @@ class objectiveColor {
             }
         })
 
-        Object.defineProperty(this, 'htmlref', {
-            get() {
-                const stepsToConvert = convertColor.stepsToConvert("html", "hex6")
-                let tempColor = this.clone(this.html);
-                if (stepsToConvert) {
-                    for (let i = 0; i < stepsToConvert.length - 1; i++) {
-                        if (tempColor, aColor) {
-                            tempColor = convertColor[stepsToConvert[i]][stepsToConvert[i + 1]](this.clone(tempColor, aColor))
-                        }
-                    }
-                }
-                return (tempColor, aColor) ? "#" + tempColor : false
-            }
-        })
+        // Object.defineProperty(this, 'htmlref', {
+        //     get() {
+        //         const stepsToConvert = convertColor.stepsToConvert("html", "hex6")
+        //         let tempColor = this.clone(this.html);
+        //         if (stepsToConvert) {
+        //             for (let i = 0; i < stepsToConvert.length - 1; i++) {
+        //                 if (tempColor, aColor) {
+        //                     tempColor = convertColor[stepsToConvert[i]][stepsToConvert[i + 1]](this.clone(tempColor, aColor))
+        //                 }
+        //             }
+        //         }
+        //         return (tempColor, aColor) ? "#" + tempColor : false
+        //     }
+        // })
     }
 }
 
