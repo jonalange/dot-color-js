@@ -1,21 +1,9 @@
 'use strict'
+const compare = require('./compere.js')
 const { html, pantone, ral } = require('color_library')
-
 const helpers = {
     splitCamelCase: function (name) {
         return name.replace(/([A-Z])/g, ' $1').trim()
-    },
-
-    deltaE: function (lab1, lab2) {
-        if (lab1 && lab2) {
-            let _this = 0
-            for (const _key in lab1) {
-                _this += Math.pow((lab1[_key] - lab2[_key]), 2)
-            }
-            return Math.sqrt(_this)
-        }
-        return false
-
     },
 
     doubleString: function (string) {
@@ -106,7 +94,6 @@ const colorConvert = {
 
     convert: function ({ from, to, color, pretty = false }) {
         const stepsToConvert = this.stepsToConvert({ from: from, to: to })
-        
         if (stepsToConvert) {
             for (let i = 0; i < stepsToConvert.length - 1; i++) {
                 if (color) {
@@ -143,7 +130,7 @@ const colorConvert = {
                 name: '',
             }
             for (const elementPantone in pantone) {
-                const t = helpers.deltaE(pantone[elementPantone].cmyk, cmyk)
+                const t = compare.init({ c1: pantone[elementPantone].cmyk, c2:cmyk})
 
                 if (t && t < temp.index) {
                     temp.index = t
@@ -261,43 +248,44 @@ const colorConvert = {
 
     hsl: {
         rgb: function (hsl) {
+            const _hsl = { h:hsl.h, s:hsl.s, l:hsl.l }
             const rgb = { r: 0, g: 0, b: 0, }
 
-            hsl.h /= 60
-            if (hsl.h < 0) {
-                hsl.h = 6 - (-hsl.h % 6)
+            _hsl.h /= 60
+            if (_hsl.h < 0) {
+                _hsl.h = 6 - (-_hsl.h % 6)
             }
-            hsl.h %= 6
+            _hsl.h %= 6
 
-            hsl.s = Math.max(0, Math.min(1, hsl.s / 100))
-            hsl.l = Math.max(0, Math.min(1, hsl.l / 100))
+            _hsl.s = Math.max(0, Math.min(1, _hsl.s / 100))
+            _hsl.l = Math.max(0, Math.min(1, _hsl.l / 100))
 
-            hsl.c = (1 - Math.abs((2 * hsl.l) - 1)) * hsl.s
-            hsl.x = hsl.c * (1 - Math.abs((hsl.h % 2) - 1))
+            _hsl.c = (1 - Math.abs((2 * _hsl.l) - 1)) * _hsl.s
+            _hsl.x = _hsl.c * (1 - Math.abs((_hsl.h % 2) - 1))
 
-            if (hsl.h < 1) {
-                rgb.r = hsl.c
-                rgb.g = hsl.x
-            } else if (hsl.h < 2) {
-                rgb.r = hsl.x
-                rgb.g = hsl.c
-            } else if (hsl.h < 3) {
-                rgb.g = hsl.c
-                rgb.b = hsl.x
-            } else if (hsl.h < 4) {
-                rgb.g = hsl.x
-                rgb.b = hsl.c
-            } else if (hsl.h < 5) {
-                rgb.r = hsl.x
-                rgb.b = hsl.c
+            if (_hsl.h < 1) {
+                rgb.r = _hsl.c
+                rgb.g = _hsl.x
+            } else if (_hsl.h < 2) {
+                rgb.r = _hsl.x
+                rgb.g = _hsl.c
+            } else if (_hsl.h < 3) {
+                rgb.g = _hsl.c
+                rgb.b = _hsl.x
+            } else if (_hsl.h < 4) {
+                rgb.g = _hsl.x
+                rgb.b = _hsl.c
+            } else if (_hsl.h < 5) {
+                rgb.r = _hsl.x
+                rgb.b = _hsl.c
             } else {
-                rgb.r = hsl.c
-                rgb.b = hsl.x
+                rgb.r = _hsl.c
+                rgb.b = _hsl.x
             }
 
-            hsl.m = hsl.l - hsl.c / 2
+            _hsl.m = _hsl.l - _hsl.c / 2
             for (const i of 'rgb') {
-                rgb[i] = Math.round((rgb[i] + hsl.m) * 255)
+                rgb[i] = Math.round((rgb[i] + _hsl.m) * 255)
             }
 
             return rgb
@@ -346,7 +334,7 @@ const colorConvert = {
                 name: '',
             }
             for (const elementPantone in pantone) {
-                const t = helpers.deltaE(pantone[elementPantone].lab, labOrigin)
+                const t = compare.init({ c1:pantone[elementPantone].lab, c2: labOrigin, complex: true})
                 if (t && t < _this.index) {
                     _this.index = t
                     _this.name = pantone[elementPantone].name
@@ -365,7 +353,7 @@ const colorConvert = {
             }
 
             for (const elementRal in ral) {
-                const t = helpers.deltaE(ral[elementRal].lab, lab)
+                const t = compare.init({ c1: ral[elementRal].lab, c2: lab, complex: true})
                 if (t !== false && t < _this.index) {
                     _this.index = t
                     _this.position = elementRal
@@ -388,11 +376,11 @@ const colorConvert = {
         rgb: function (lab) {
             const xyz = { x: 0, y: 0, z: 0 }
 
-            xyz.y = (lab.l + 16) / 116,
-                xyz.x = lab.a / 500 + xyz.y,
-                xyz.z = xyz.y - lab.b / 200,
+            xyz.y = (lab.l + 16) / 116
+            xyz.x = lab.a / 500 + xyz.y
+            xyz.z = xyz.y - lab.b / 200
 
-                xyz.x = 0.95047 * ((Math.pow(xyz.x, 3) > 0.008856) ? Math.pow(xyz.x, 3) : (xyz.x - 16 / 116) / 7.787)
+            xyz.x = 0.95047 * ((Math.pow(xyz.x, 3) > 0.008856) ? Math.pow(xyz.x, 3) : (xyz.x - 16 / 116) / 7.787)
             xyz.y = 1.00000 * ((Math.pow(xyz.y, 3) > 0.008856) ? Math.pow(xyz.y, 3) : (xyz.y - 16 / 116) / 7.787)
             xyz.z = 1.08883 * ((Math.pow(xyz.z, 3) > 0.008856) ? Math.pow(xyz.z, 3) : (xyz.z - 16 / 116) / 7.787)
 
@@ -496,33 +484,38 @@ const colorConvert = {
         },
 
         hsl: function (rgb) {
+            const _rgb = {
+                r: rgb.r,
+                g: rgb.g,
+                b: rgb.b
+            }
             const hsl = { h: 0, s: 0, l: 0 }
             for (const i of 'rgb') {
-                rgb[i] /= 255
+                _rgb[i] /= 255
             }
 
             // Min Max chanel val
-            rgb.cmin = Math.min(rgb.r, rgb.g, rgb.b)
-            rgb.cmax = Math.max(rgb.r, rgb.g, rgb.b)
-            rgb.delta = rgb.cmax - rgb.cmin
+            _rgb.cmin = Math.min(_rgb.r, _rgb.g, _rgb.b)
+            _rgb.cmax = Math.max(_rgb.r, _rgb.g, _rgb.b)
+            _rgb.delta = _rgb.cmax - _rgb.cmin
 
             // Calculate hue
-            if (rgb.delta === 0) {
+            if (_rgb.delta === 0) {
                 hsl.h = 0
-            } else if (rgb.cmax === rgb.r) {
-                hsl.h = Math.round((((rgb.g - rgb.b) / rgb.delta) % 6) * 60)
-            } else if (rgb.cmax === rgb.g) {
-                hsl.h = Math.round(((rgb.b - rgb.r) / rgb.delta + 2) * 60)
+            } else if (_rgb.cmax === _rgb.r) {
+                hsl.h = Math.round((((_rgb.g - _rgb.b) / _rgb.delta) % 6) * 60)
+            } else if (_rgb.cmax === _rgb.g) {
+                hsl.h = Math.round(((_rgb.b - _rgb.r) / _rgb.delta + 2) * 60)
             } else {
-                hsl.h = Math.round(((rgb.r - rgb.g) / rgb.delta + 4) * 60)
+                hsl.h = Math.round(((_rgb.r - _rgb.g) / _rgb.delta + 4) * 60)
             }
 
             // Make negative hues positive behind 360°
             hsl.h = (hsl.h < 0) ? hsl.h + 360 : hsl.h
 
-            hsl.l = (rgb.cmax + rgb.cmin) / 2
+            hsl.l = (_rgb.cmax + _rgb.cmin) / 2
 
-            hsl.s = rgb.delta === 0 ? 0 : rgb.delta / (1 - Math.abs(2 * hsl.l - 1))
+            hsl.s = _rgb.delta === 0 ? 0 : _rgb.delta / (1 - Math.abs(2 * hsl.l - 1))
 
             hsl.s = +(hsl.s * 100).toFixed(1)
             hsl.l = +(hsl.l * 100).toFixed(1)
@@ -531,12 +524,17 @@ const colorConvert = {
         },
 
         hsv: function (rgb) {
+            const _rgb = {
+                r: rgb.r,
+                g: rgb.g,
+                b: rgb.b
+            }
             for (const i of 'rgb') {
-                rgb[i] /= 255
+                _rgb[i] /= 255
             }
 
-            const minRGB = Math.min(rgb.r, Math.min(rgb.g, rgb.b))
-            const maxRGB = Math.max(rgb.r, Math.max(rgb.g, rgb.b))
+            const minRGB = Math.min(_rgb.r, Math.min(_rgb.g, _rgb.b))
+            const maxRGB = Math.max(_rgb.r, Math.max(_rgb.g, _rgb.b))
             let hsv = false
 
             if (minRGB === maxRGB) {
@@ -548,8 +546,8 @@ const colorConvert = {
                 }
             } else {
                 // color
-                const d = (rgb.r === minRGB) ? rgb.g - rgb.b : ((rgb.b === minRGB) ? rgb.r - rgb.g : rgb.b - rgb.r)
-                const h = (rgb.r === minRGB) ? 3 : ((rgb.b === minRGB) ? 1 : 5)
+                const d = (_rgb.r === min_rgb) ? _rgb.g - _rgb.b : ((_rgb.b === minRGB) ? _rgb.r - _rgb.g : _rgb.b - _rgb.r)
+                const h = (_rgb.r === minRGB) ? 3 : ((_rgb.b === minRGB) ? 1 : 5)
                 hsv = {
                     h: 60 * (h - d / (maxRGB - minRGB)),
                     s: ((maxRGB - minRGB) / maxRGB) * 100,
@@ -625,22 +623,23 @@ const colorConvert = {
                 html: '',
             }
 
+
             for (const elementHtml in html) {
                 if (html[elementHtml].rgb) {
-                    const t = Math.abs(html[elementHtml].rgb.r - rgb.r) + Math.abs(html[elementHtml].rgb.g - rgb.g) + Math.abs(html[elementHtml].rgb.b - rgb.b)
+                    const compareIndex = compare.init({c1: html[elementHtml].rgb, c2: rgb})
+                                        
+                    if (compareIndex < _this.index) {
+                        _this.index = compareIndex
+                        _this.element = elementHtml
 
-
-                    if (t < _this.index) {
-                        _this.index = t
-                        _this.html = helpers.splitCamelCase(html[elementHtml].name)
                         if (_this.index === 0) {
-                            return _this.html
+                            return helpers.splitCamelCase(html[_this.element].name)
                         }
                     }
                 }
             }
 
-            return _this.html
+            return helpers.splitCamelCase(html[_this.element].name)
         },
 
         xyz: function (rgb) {

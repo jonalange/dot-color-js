@@ -1,5 +1,6 @@
 'use strict'
 const AcceptedColors = require('./accepted_colors')
+const convertColor = require("./convert_color");
 
 // ----------------------------- 0 | object color
 class AbstractColorObject {
@@ -164,6 +165,19 @@ module.exports = {
         } else {
             return data
         }
+    },
+
+    segments({startpoint,endpoint, segments, dontIncludeStart = false, dontIncludeEnd = false}) {
+        const totalSize = endpoint - startpoint
+        const segmentsArray = []
+        const segmentSize = totalSize/segments
+
+
+        for(let i = (dontIncludeStart)? 1: 0 ; i <= ((dontIncludeEnd)? segments -1: segments); i++) {
+            segmentsArray.push((segmentSize*i) + startpoint)
+        }
+        
+        return segmentsArray
     },
 
     hslSegment: function ({ hsl, segments, offset = 0 }) {
