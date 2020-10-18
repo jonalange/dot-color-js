@@ -270,6 +270,34 @@ class objectiveColor {
         },
       });
 
+      Object.defineProperty(this, "warmth", {
+        get() {
+          let _this = {
+            isWarm: true,
+            warm: 0,
+            cold: 0
+          }
+
+          let { h } = this.hsl
+          h = h - 60 
+          if(h < 0) {
+            h = 360 - h
+          }
+
+          if( h > 180){
+            _this.isWarm = false
+            _this.cold = 180 / (h%180)
+            _this.warm = 180/ (Math.abs(180 - (h%180)))
+          } else  {
+            _this.cold = Math.abs(180 - (h%180))
+            _this.warm = h%180
+          }
+
+          return _this
+        },set(input) {
+          this.colorExtractor(input);
+        },
+      });
       // Object.defineProperty(this, 'htmlref', {
       //     get() {
       //         const stepsToConvert = convertColor.stepsToConvert("html", "hex6")

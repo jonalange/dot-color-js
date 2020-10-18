@@ -26,11 +26,11 @@ for (const elementColor of testData) {
             }
 
             // see if the testing is correct
-            if (die !== cast) {
-                testPased = false
-                console.log('faild on:' + (testRulez.statistics.totalTests + 2), die, '---------------------------------------')
-            } else {
+            if (die === cast || die === cast.toString(2)) {
                 testRulez.addline([elementColor[0], testValue + ": " + die])
+            } else {
+                testPased = false
+                console.log('faild on:' + (testRulez.statistics.totalTests + 2), die, cast ,'---------------------------------------')
             }
         }
 

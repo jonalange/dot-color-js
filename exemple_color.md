@@ -72,3 +72,13 @@
  | g: 30 | cmyk: c,0,k,30,m,0,y,0 | 
  | rgb 0 255 0 | format: rgb | 
  | rgb 0 255 0 | rgb: b,0,g,255,r,0 | 
+ | rgb(0 255 0) | invert: b,255,g,0,r,255 | 
+ | rgb 60 8 10 | invert: b,58,g,60,r,8 | 
+ | rgb 60 8 10 | invert: b,58,g,60,r,8 | 
+ | rgb 60 8 10 | primary: b,0,g,0,r,255 | 
+ | red | primary: Red | 
+ | ral 7015 | primary: lrv,10,name,Signal Brown,ral,8002 | 
+ | rgb 60 8 10 | secondary: b,255,g,0,r,255 | 
+ | red | secondary: Yellow | 
+ | rgb 60 8 10 | tertiary: b,128,g,0,r,255 | 
+ | red | tertiary: Dark Orange | 

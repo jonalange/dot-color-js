@@ -402,7 +402,7 @@ const colorConvert = {
         cmyk: function (pantoneInput) {
             const _this = helpers.pullDataFromList2({
                 listOfColors: pantone,
-                lookingFor: pantoneInput.replace(/[a-z]/gi,'') + "C",
+                lookingFor: pantoneInput.toString().replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
             })
             return (_this) ? _this.cmyk : false
@@ -411,7 +411,7 @@ const colorConvert = {
         rgb: function (pantoneInput) {
             const _this = helpers.pullDataFromList2({
                 listOfColors: pantone,
-                lookingFor: pantoneInput.replace(/[a-z]/gi,'') + "C",
+                lookingFor: pantoneInput.toString().replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
             })
             return (_this) ? _this.rgb : false
@@ -420,7 +420,7 @@ const colorConvert = {
         lab: function (pantoneInput) {
             const _this = helpers.pullDataFromList2({
                 listOfColors: pantone,
-                lookingFor: pantoneInput.replace(/[a-z]/gi,'') + "C",
+                lookingFor: pantoneInput.toString().replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
             })
             return (_this) ? _this.lab : false
