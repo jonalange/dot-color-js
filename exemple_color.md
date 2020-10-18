@@ -77,8 +77,11 @@
  | rgb 60 8 10 | invert: b,58,g,60,r,8 | 
  | rgb 60 8 10 | primary: b,0,g,0,r,255 | 
  | red | primary: Red | 
+ | RAL 1011 | primary: lrv,25,name,Yellow Grey,ral,7034 | 
  | ral 7015 | primary: lrv,10,name,Signal Brown,ral,8002 | 
  | rgb 60 8 10 | secondary: b,255,g,0,r,255 | 
  | red | secondary: Yellow | 
+ | RAL 1011 | secondary: lrv,71,name,Sulfur Yellow,ral,1016 | 
  | rgb 60 8 10 | tertiary: b,128,g,0,r,255 | 
  | red | tertiary: Dark Orange | 
+ | RAL 1011 | tertiary: lrv,49,name,Saffron Yellow,ral,1017 | 

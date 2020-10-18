@@ -23,45 +23,29 @@ const helpers = {
         return false
     },
 
-    pullDataFunction: function (a, b, rowName) {
-        if (Array.isArray(rowName)) {
-            for (const rowE of rowName) {
-                if (this.sanitizeString(a[rowE]) == b) {
+    pullDataFunction: function ({ aColor, bColor, row }) {
+        if (Array.isArray(row)) {
+            for (const rowE of row) {
+                if (this.sanitizeString(aColor[rowE]) == bColor) {
                     return true
                 }
             }
             return false
         }
-        return this.sanitizeString(a[rowName]) === b
+        return this.sanitizeString(aColor[row]) === bColor
     },
 
-    pullDataFromList2: function ({ listOfColors, lookingFor, rowName = 'name' }) {
+    pullDataFromList: function ({ listOfColors, lookingFor, rowName = 'name' }) {
         const lookingForCash = this.sanitizeString(lookingFor)
 
-        const temp = listOfColors.filter(a => this.pullDataFunction(a, lookingForCash, rowName))
+        const temp = listOfColors.filter(a => this.pullDataFunction({ aColor: a, bColor: lookingForCash, row: rowName }))
         if (temp.length) {
             return temp[0]
         }
-
         return false
 
     },
-    pullDataFromList: function (listName, coloType, refeance, query = 'name') {
 
-        const referanceCash = this.sanitizeString(refeance)
-
-        const temp = listName.filter(a => this.sanitizeString(a[query]) === referanceCash)
-
-        if (temp.length) {
-            if (temp[0][coloType]) {
-                return temp[0][coloType]
-            } else if (temp[0][query]) {
-                return temp[0][query]
-            }
-        }
-
-        return false
-    },
     makeNumeric: function (inputNumber) {
         const temp = parseInt(inputNumber)
         return isNaN(temp) ? 0 : temp
@@ -69,22 +53,22 @@ const helpers = {
 }
 
 const colorConvert = {
-    pullDataFromList: function (coloType, refeance) {
+    pullDataFromList: function (coloType, reference) {
         switch (coloType) {
             case 'html':
-                return helpers.pullDataFromList2({
+                return helpers.pullDataFromList({
                     listOfColors: html,
-                    lookingFor: refeance,
+                    lookingFor: reference,
                 })
             case 'pantone':
-                return helpers.pullDataFromList2({
+                return helpers.pullDataFromList({
                     listOfColors: pantone,
-                    lookingFor: refeance,
+                    lookingFor: reference,
                 })
             case 'ral':
-                return helpers.pullDataFromList2({
+                return helpers.pullDataFromList({
                     listOfColors: ral,
-                    lookingFor: refeance,
+                    lookingFor: reference,
                     rowName: ['ral', 'name']
                 })
             default:
@@ -237,7 +221,7 @@ const colorConvert = {
 
     html: {
         rgb: function (htmlInput) {
-            const _this = helpers.pullDataFromList2({
+            const _this = helpers.pullDataFromList({
                 listOfColors: html,
                 lookingFor: htmlInput,
                 rowName: "name",
@@ -400,7 +384,7 @@ const colorConvert = {
 
     pantone: {
         cmyk: function (pantoneInput) {
-            const _this = helpers.pullDataFromList2({
+            const _this = helpers.pullDataFromList({
                 listOfColors: pantone,
                 lookingFor: pantoneInput.toString().replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
@@ -409,7 +393,7 @@ const colorConvert = {
         },
 
         rgb: function (pantoneInput) {
-            const _this = helpers.pullDataFromList2({
+            const _this = helpers.pullDataFromList({
                 listOfColors: pantone,
                 lookingFor: pantoneInput.toString().replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
@@ -418,7 +402,7 @@ const colorConvert = {
         },
 
         lab: function (pantoneInput) {
-            const _this = helpers.pullDataFromList2({
+            const _this = helpers.pullDataFromList({
                 listOfColors: pantone,
                 lookingFor: pantoneInput.toString().replace(/[a-z]/gi,'') + "C",
                 rowName: "name",
@@ -429,7 +413,7 @@ const colorConvert = {
 
     ral: {
         rgb: function (ralInput) {
-            let ralOutput = helpers.pullDataFromList2({
+            let ralOutput = helpers.pullDataFromList({
                 listOfColors: ral,
                 lookingFor: ralInput,
                 rowName: ['ral', 'name']
@@ -440,7 +424,7 @@ const colorConvert = {
         },
 
         cmyk: function (ralInput) {
-            let ralOutput = helpers.pullDataFromList2({
+            let ralOutput = helpers.pullDataFromList({
                 listOfColors: ral,
                 lookingFor: ralInput,
                 rowName: ['ral', 'name']
@@ -452,7 +436,7 @@ const colorConvert = {
         },
 
         lab: function (ralInput) {
-            let ralOutput = helpers.pullDataFromList2({
+            let ralOutput = helpers.pullDataFromList({
                 listOfColors: ral,
                 lookingFor: ralInput,
                 rowName: ['ral', 'name']

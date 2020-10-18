@@ -71,9 +71,12 @@ module.exports = [
     ['rgb 60 8 10', { invert: { r: 8, g: 60, b: 58 }}],
     ['rgb 60 8 10', { primary: { r: 255, g: 0, b: 0 }}], // primary
     ['red', { primary: 'Red'}],
+    ['RAL 1011', { primary: { ral: 7034, name: 'Yellow Grey', lrv: 25 }}],
     ['ral 7015', { primary: { ral: 8002, name: 'Signal Brown', lrv: 10 }}],
     ['rgb 60 8 10', { secondary: { r: 255, g: 0, b: 255 }}], // secoundary
     ['red', { secondary: 'Yellow'}],
+    ['RAL 1011', { secondary: { ral: 1016, name: 'Sulfur Yellow', lrv: 71 }}],
     ['rgb 60 8 10', { tertiary: { r: 255, g: 0, b: 128 }}], // tertiary
     ['red', { tertiary: 'Dark Orange'}],
+    ['RAL 1011', { tertiary: { ral: 1017, name: 'Saffron Yellow', lrv: 49 }}],
 ]

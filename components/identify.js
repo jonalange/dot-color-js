@@ -10,7 +10,7 @@ class abstractColor {
             cmyk: /hex/g,
             hex: /(?![hxo])[g-z]|([0-9]\w)\s([0-9]\w)\s([0-9]\w)/ig,
             grayscale: /#|pantone/g,
-            pantone: /w|rgb/g,
+            pantone: /w|rgb|ral/ig,
             rgb: /xyz|lab|hsl|yuv/g,
         }
     }
