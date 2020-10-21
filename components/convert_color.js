@@ -597,7 +597,7 @@ const colorConvert = {
             return cmyk
         },
 
-        rgbdecimal: function (rgb) {
+        rgbDecimal: function (rgb) {
             return (rgb.r << 16) + (rgb.g << 8) + (rgb.b);
         },
 
@@ -664,12 +664,12 @@ const colorConvert = {
         }
     },
 
-    rgbdecimal: {
-        rgb: function (RGBdecimal) {
+    rgbDecimal: {
+        rgb: function (rgbDecimal) {
             return {
-                r: (RGBdecimal & 0xff0000) >> 16,
-                g: (RGBdecimal & 0x00ff00) >> 8,
-                b: (RGBdecimal & 0x0000ff)
+                r: (rgbDecimal & 0xff0000) >> 16,
+                g: (rgbDecimal & 0x00ff00) >> 8,
+                b: (rgbDecimal & 0x0000ff)
             }
         }
     },

@@ -1,11 +1,11 @@
 
 const objectiveColor = require('../dot-color')
 const testData = require('./test.data')
-const testRulez = require('./test.rulez')
+const testRules = require('./test.rules')
 
 const colorTest = new objectiveColor()
 
-testRulez.buildTableHead()
+testRules.buildTableHead()
 
 for (const elementColor of testData) {
 
@@ -14,7 +14,7 @@ for (const elementColor of testData) {
         colorTest.colorExtractor(elementColor[0])
         // read
 
-        let testPased = true
+        let testPassed = true
         for (const testValue in elementColor[1]) {
             // convert data to a die cast model
             if (typeof elementColor[1][testValue] === 'object') {
@@ -27,20 +27,20 @@ for (const elementColor of testData) {
 
             // see if the testing is correct
             if (die === cast || die === cast.toString(2)) {
-                testRulez.addline([elementColor[0], testValue + ": " + die])
+                testRules.addLine([elementColor[0], testValue + ": " + die])
             } else {
-                testPased = false
-                console.log('faild on:' + (testRulez.statistics.totalTests + 2), die, cast ,'---------------------------------------')
+                testPassed = false
+                console.log('failed on:' + (testRules.statistics.totalTests + 2), die, cast ,'---------------------------------------')
             }
         }
 
-        if (testPased) {
-            testRulez.statistics.succesfull++;
+        if (testPassed) {
+            testRules.statistics.successful++;
         } else {
-            testRulez.statistics.faild++;
+            testRules.statistics.failed++;
         }
     }
 }
 
-console.log(testRulez.statistics)
-testRulez.writeFile()
+console.log(testRules.statistics)
+testRules.writeFile()

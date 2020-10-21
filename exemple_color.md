@@ -56,10 +56,11 @@
  | 10 20 15 | format: rgb | 
  | rgb 10 20 15 | format: rgb | 
  | rgba 10 20 15 0.2 | format: rgba | 
- | rgb 16711680 | format: rgbdecimal | 
- | rgbdecimal 16711680 | format: rgbdecimal | 
- | rgb decimal 16711680 | format: rgbdecimal | 
- | rgb numeric 16711680 | format: rgbdecimal | 
+ | rgb 16711680 | format: rgbDecimal | 
+ | rgbdecimal 16711680 | format: rgbDecimal | 
+ | rgbDecimal 16711680 | format: rgbDecimal | 
+ | rgb decimal 16711680 | format: rgbDecimal | 
+ | rgb numeric 16711680 | format: rgbDecimal | 
  | w 450 | format: w | 
  | xyz 10 20 4 | format: xyz | 
  | yuv 20 20 4 | format: yuv | 
@@ -75,6 +76,7 @@
  | rgb(0 255 0) | invert: b,255,g,0,r,255 | 
  | rgb 60 8 10 | invert: b,58,g,60,r,8 | 
  | rgb 60 8 10 | invert: b,58,g,60,r,8 | 
+ | RAL 1011 | invert: lrv,19,name,Pigeon Blue,ral,5014 | 
  | rgb 60 8 10 | primary: b,0,g,0,r,255 | 
  | red | primary: Red | 
  | RAL 1011 | primary: lrv,25,name,Yellow Grey,ral,7034 | 
@@ -85,3 +87,10 @@
  | rgb 60 8 10 | tertiary: b,128,g,0,r,255 | 
  | red | tertiary: Dark Orange | 
  | RAL 1011 | tertiary: lrv,49,name,Saffron Yellow,ral,1017 | 
+ | hsl(10 50 20) | analogous: 0,[object Object],1,[object Object],2,[object Object] | 
+ | Coral | analogous: 0,Salmon,1,Coral,2,Sandy Brown | 
+ | DarkMagenta | analogous: 0,Indigo,1,Dark Magenta,2,Brown | 
+ | 80 | analogous: 0,80,1,80,2,80 | 
+ | #801 | tints: 0,801,1,A01,10,FFF,2,D01,3,F01,4,F13,5,F45,6,F67,7,F89,8,FBB,9,FDD | 
+ | #801 | shades: 0,000,1,000,10,801,2,100,3,200,4,300,5,400,6,500,7,500,8,600,9,700 | 
+ | yellow | complementary: 0,Blue,1,yellow | 

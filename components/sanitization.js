@@ -228,7 +228,7 @@ class abstractSanitizer extends colorHelper {
         return this.abastractKey('rgba')
     }
 
-    get rgbdecimal() {
+    get rgbDecimal() {
         let { raw } = this
         return raw.replace(/[^0-9]/g, '')
     }

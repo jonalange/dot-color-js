@@ -29,7 +29,7 @@ console.log(color.cmyk) // {c: 96, k: 6, m: 75, y: 0}
 ```
 
 ## Supported colors
-The main thing we do better then any other color convertor is the ability to get any string and figure out if there is a color buried in there. We designed this package to be used behined an input field where the values can range from "RED" to "CMYK 30 20 10 5" and even "C 30 K 5 M 20 Y 10". The rule is: if you can read it as a color we identify it as a valid color.
+The main thing we do better then any other color convertor is the ability to get any string and figure out if there is a color buried in there. We designed this package to be used behind an input field where the values can range from "RED" to "CMYK 30 20 10 5" and even "C 30 K 5 M 20 Y 10". The rule is: if you can read it as a color we identify it as a valid color.
 
 [Accepted colors input test](exemple_color.md)
 
@@ -54,16 +54,18 @@ The main thing we do better then any other color convertor is the ability to get
 | xyz | { x: 44, y: 69, z: 45 } | [44, 69, 45] | 'xyz 44 69 45' |
 | yuv | { y: 180, u: 113.2, v: 73.5 } | [ 180, 113.2, 73.5 ] | 'yuv 180 113.2 73.5' |
 
+## Pattern Generator
+
 ## Ambiguous Color
-We do not have a lot of ambiguous situations, but due to the nature of string interpetation we have to default some time.We want to be diligent and document all of the ambigous colors.
+We do not have a lot of ambiguous situations, we try to reduce them as possible, but due to the nature of string interpretation we have to default some time to a color.We want to be diligent and document all of the ambiguous colors that could cause colors.
 
 ##### Pantone (shorthand) VS hex3 (shorthand)
 **100C** is hex3
-100C could be Pantone 100C or #100C. In this case it is more likely to be hex3 so we decided for the hex as long as there is no pantone key.
+100C could be Pantone 100C or #100C. In this case it is more likely to be hex3 so we decided for the hex as long as there is no pantone key in the string.
 
 ##### Grayscale 100 VS hex3 (no hash) 100
 **100** is grayscale
-100 could be Pantone 100C or hex #100 or grayscale 100. In this case we go to grayscale because it would complety exclude grayscale 100% 
+100 could be Pantone 100C or hex #100 or grayscale 100. In this case we go to grayscale because it would completely exclude grayscale 100% 
 
 ##### CMYK (shorthand) VS any 4 group shorthand.
 **10 30 40 10** is CMYK 
@@ -89,7 +91,7 @@ const color = new dotColor()
 
 color.cmyk = "cmyk 0 50 60 60"
 
-// the identifeid format
+// the identified format
 console.log(color.format) // "cmyk"
 
 // the sanitized color

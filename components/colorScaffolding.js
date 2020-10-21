@@ -167,21 +167,30 @@ module.exports = {
         }
     },
 
-    segments({startpoint,endpoint, segments, dontIncludeStart = false, dontIncludeEnd = false}) {
-        const totalSize = endpoint - startpoint
+    segments: function({startPoint,endpoint, segments, notIncludeStart = false, notIncludeEnd = false}) {
+        const totalSize = endpoint - startPoint
         const segmentsArray = []
         const segmentSize = totalSize/segments
 
 
-        for(let i = (dontIncludeStart)? 1: 0 ; i <= ((dontIncludeEnd)? segments -1: segments); i++) {
-            segmentsArray.push((segmentSize*i) + startpoint)
+        for(let i = (notIncludeStart)? 1: 0 ; i <= ((notIncludeEnd)? segments -1: segments); i++) {
+            segmentsArray.push((segmentSize*i) + startPoint)
         }
         
         return segmentsArray
     },
 
-    hslSegment: function ({ hsl, segments, offset = 0 }) {
-        return ((Math.round((hsl - offset) / (360 / segments)) * (360 / segments)) + offset) % 360
+    hslCircle: function (value){
+        if(value < 0){
+          return Math.abs(360+value)%360
+        } else {
+          return (value)%360
+        }
+    },
+
+    hslSegment: function ({ hue, segments, offset = 0 }) {
+        const arcSize = (360 / segments)
+        return this.hslCircle((Math.round((hue - offset) / arcSize ) * arcSize ) + offset)
     },
 
     customColorObject: function ({ colorData, typeOfColor }) {

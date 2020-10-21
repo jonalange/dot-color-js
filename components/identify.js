@@ -54,7 +54,7 @@ class abstractColor {
                 return (colorVal.match(this.exclusionRegex.hex)) ? false : true
             case "grayscale":
                 return (colorVal.match(this.exclusionRegex.grayscale)) ? false : true
-            case "rgbdecimal":
+            case "rgbDecimal":
                 var colorLenght = colorVal.split(/[^0-9a-z]/)
                 var indexOfDeciaml = colorVal.indexOf('rgb') > -1 || colorVal.indexOf('decimal') > -1
                 return (colorLenght.length > 2 && !indexOfDeciaml) ? false : true  
@@ -251,18 +251,18 @@ class colorIdentify extends abstractColor {
         return false
     }
 
-    get rgbdecimal() {
-        const { rgbdecimal } = this.raw
+    get rgbDecimal() {
+        const { rgbDecimal } = this.raw
 
-        if (typeof rgbdecimal === 'string') {
-            let numericData = rgbdecimal.match(/(\d+)/g)
+        if (typeof rgbDecimal === 'string') {
+            let numericData = rgbDecimal.match(/(\d+)/g)
             if (numericData) {
                 numericData = numericData[0]
 
-                if (rgbdecimal.indexOf('rgb') > -1 || rgbdecimal.indexOf('decimal') > -1) {
+                if (rgbDecimal.indexOf('rgb') > -1 || rgbDecimal.indexOf('decimal') > -1) {
                     return numericData
                 } else {
-                    if (this.exclude(this.input, 'rgbdecimal') && this.abstractMakeInt(numericData) > 65792) {
+                    if (this.exclude(this.input, 'rgbDecimal') && this.abstractMakeInt(numericData) > 65792) {
                         return numericData
                     } else {
                         return false

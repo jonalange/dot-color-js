@@ -18,7 +18,7 @@ class AcceptedColors {
         this.ral = {}
         this.rgb = {}
         this.rgba = {}
-        this.rgbdecimal = {}
+        this.rgbDecimal = {}
         this.w = {}
         this.xyz = {}
         this.yuv = {}
@@ -29,7 +29,7 @@ class AcceptedColors {
     }
 
     get paintKeys () {
-        return _removeFromArray(this.keys,['ral', 'rgbdecimal' , 'pantone', 'grayscale', 'hex3', 'hex4', 'rgba', 'yuv'])
+        return _removeFromArray(this.keys,['ral', 'rgbDecimal' , 'pantone', 'grayscale', 'hex3', 'hex4', 'rgba', 'yuv'])
     }
 
     get sanitaryKeys () {

@@ -7,26 +7,26 @@ class _this {
         this.output = []
 
         this.statistics = {
-            faild: 0,
-            succesfull: 0,
+            failed: 0,
+            successful: 0,
             timestart: 0,
             timeEnd: 0,
 
             get totalTests() {
-                return this.succesfull + this.faild
+                return this.successful + this.failed
             }
         }
 
         this.buildPageStart();
     }
 
-    addline(a) {
+    addLine(a) {
         this.output.push(this.tableDivider + a.join(this.tableDivider) + this.tableDivider + this.newline)
     }
 
     buildTableHead() {
-        this.addline(["Input value","detect as"])
-        this.addline(["----","----"])
+        this.addLine(["Input value","detect as"])
+        this.addLine(["----","----"])
     }
 
     buildPageStart() {

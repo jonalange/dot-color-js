@@ -77,7 +77,7 @@ class objectiveColor {
       Object.defineProperty(this, "invert", {
         get() {
           const { hsl } = this;
-          hsl.h = (hsl.h + 180) % 360;
+          hsl.h = this.hslCircle(hsl.h + 180)
 
           const tempColor = convertColor.convert({
             from: "hsl",
@@ -96,7 +96,7 @@ class objectiveColor {
       
       Object.defineProperty(this, "primary", {
         get() {
-          const tempH = this.hslSegment({ hsl: this.hsl.h, segments: 3 });
+          const tempH = this.hslSegment({ hue: this.hsl.h, segments: 3 });
           const tempColor = convertColor.convert({
             from: "hsl",
             to: this.format,
@@ -115,7 +115,7 @@ class objectiveColor {
       Object.defineProperty(this, "secondary", {
         get() {
           const tempH = this.hslSegment({
-            hsl: this.hsl.h,
+            hue: this.hsl.h,
             segments: 3,
             offset: 60,
           });
@@ -137,7 +137,7 @@ class objectiveColor {
       Object.defineProperty(this, "tertiary", {
         get() {
           const tempH = this.hslSegment({
-            hsl: this.hsl.h,
+            hue: this.hsl.h,
             segments: 6,
             offset: 30,
           });
@@ -164,7 +164,7 @@ class objectiveColor {
 
           const _this = {
             hslArray: [],
-            hslSegments: this.segments({startpoint: 0, endpoint: 100, segments: 10}),
+            hslSegments: this.segments({startPoint: 0, endpoint: 100, segments: 10}),
             buildArray: function () {
               for(let i = 0; i < this.hslSegments.length; i++ ) {
                 const colorTemp = convertColor.convert({
@@ -183,14 +183,13 @@ class objectiveColor {
         },
       });
 
-
       Object.defineProperty(this, "tints", {
         get() {
           const { hsl, format } = this
 
           const _this = {
             hslArray: [],
-            hslSegments: this.segments({startpoint: hsl.l, endpoint: 100, segments: 10}),
+            hslSegments: this.segments({startPoint: hsl.l, endpoint: 100, segments: 10}),
             buildArray: function () {
               for(let i = 0; i < this.hslSegments.length; i++ ) {
                 const colorTemp = convertColor.convert({
@@ -215,7 +214,7 @@ class objectiveColor {
 
           const _this = {
             hslArray: [],
-            hslSegments: this.segments({startpoint: 0, endpoint: hsl.l, segments: 10}),
+            hslSegments: this.segments({startPoint: 0, endpoint: hsl.l, segments: 10}),
             buildArray: function () {
               for(let i = 0; i < this.hslSegments.length; i++ ) {
                 const colorTemp = convertColor.convert({
@@ -234,21 +233,12 @@ class objectiveColor {
         },
       });
 
-      Object.defineProperty(this, "analogus", {
+      Object.defineProperty(this, "analogous", {
         get() {
-          function fixRound(value){
-            
-            if(value < 0){
-              return Math.abs(360+value)%360
-            } else {
-              return (value)%360
-            }
-          }
-          const { hsl, format, sanitizedColor } = this
-
+          const { hsl, format } = this
           const _this = {
             hslArray: [],
-            hslSegments: [fixRound(hsl.h-30), 0, fixRound(hsl.h+30) ],
+            hslSegments: [this.hslCircle(hsl.h-30), hsl.h, this.hslCircle(hsl.h+30) ],
             buildArray: function () {
               for(let i = 0; i < this.hslSegments.length; i++ ) {
                 const colorTemp = convertColor.convert({
@@ -256,15 +246,26 @@ class objectiveColor {
                   to: format,
                   color: {h: this.hslSegments[i], s:hsl.s, l:hsl.l },
                 });
-                // if(i === 1) {
-                //   this.hslArray.push(sanitizedColor)
-                // }
+
                 this.hslArray.push(colorTemp)
               }
             }
           }
+
+          // if( format === 'html' || format === 'pantone' || format === 'ral'){
+          //   _this.hslArray[1] === this.sanitizedColor
+          // }
+
           _this.buildArray()
           return _this.hslArray
+        },set(input) {
+          this.colorExtractor(input);
+        },
+      });
+
+      Object.defineProperty(this, "complementary", {
+        get() {
+          return [this.invert, this.sanitizedColor]
         },set(input) {
           this.colorExtractor(input);
         },
@@ -298,20 +299,6 @@ class objectiveColor {
           this.colorExtractor(input);
         },
       });
-      // Object.defineProperty(this, 'htmlref', {
-      //     get() {
-      //         const stepsToConvert = convertColor.stepsToConvert("html", "hex6")
-      //         let tempColor = this.clone(this.html);
-      //         if (stepsToConvert) {
-      //             for (let i = 0; i < stepsToConvert.length - 1; i++) {
-      //                 if (tempColor, colorType) {
-      //                     tempColor = convertColor[stepsToConvert[i]][stepsToConvert[i + 1]](this.clone(tempColor, colorType))
-      //                 }
-      //             }
-      //         }
-      //         return (tempColor, colorType) ? "#" + tempColor : false
-      //     }
-      // })
     }
 }
 

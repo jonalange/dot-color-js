@@ -53,10 +53,11 @@ module.exports = [
     ['10 20 15', {format: 'rgb'}],
     ['rgb 10 20 15', {format: 'rgb'}],
     ['rgba 10 20 15 0.2', {format: 'rgba'}],
-    ['rgb 16711680', { format: 'rgbdecimal' }],
-    ['rgbdecimal 16711680', { format: 'rgbdecimal' }],
-    ['rgb decimal 16711680', { format: 'rgbdecimal' }],
-    ['rgb numeric 16711680', { format: 'rgbdecimal' }],
+    ['rgb 16711680', { format: 'rgbDecimal' }],
+    ['rgbdecimal 16711680', { format: 'rgbDecimal' }],
+    ['rgbDecimal 16711680', { format: 'rgbDecimal' }],
+    ['rgb decimal 16711680', { format: 'rgbDecimal' }],
+    ['rgb numeric 16711680', { format: 'rgbDecimal' }],
     ['w 450', {format: 'w'}],
     ['xyz 10 20 4', {format: 'xyz' }],
     ['yuv 20 20 4', {format: 'yuv'}],
@@ -69,6 +70,7 @@ module.exports = [
     ['rgb(0 255 0)', { invert: { r: 255, g: 0, b: 255 }}], // invert
     ['rgb 60 8 10', { invert: { r: 8, g: 60, b: 58 }}],
     ['rgb 60 8 10', { invert: { r: 8, g: 60, b: 58 }}],
+    ['RAL 1011', { invert: { ral: 5014, name: 'Pigeon Blue', lrv: 19 }}],
     ['rgb 60 8 10', { primary: { r: 255, g: 0, b: 0 }}], // primary
     ['red', { primary: 'Red'}],
     ['RAL 1011', { primary: { ral: 7034, name: 'Yellow Grey', lrv: 25 }}],
@@ -79,4 +81,11 @@ module.exports = [
     ['rgb 60 8 10', { tertiary: { r: 255, g: 0, b: 128 }}], // tertiary
     ['red', { tertiary: 'Dark Orange'}],
     ['RAL 1011', { tertiary: { ral: 1017, name: 'Saffron Yellow', lrv: 49 }}],
+    ['hsl(10 50 20)', { analogous: [ { h: 340, s: 50, l: 20 }, { h: 10, s: 50, l: 20 }, { h: 40, s: 50, l: 20 } ]}], // analogous
+    ['Coral', { analogous: [ 'Salmon', 'Coral', 'Sandy Brown' ]}],
+    ['DarkMagenta', { analogous: [ 'Indigo', 'Dark Magenta', 'Brown' ]}],
+    ['80', { analogous: [ 80, 80, 80 ]}],
+    ['#801', { tints: [ '801', 'A01',  'D01',  'F01',  'F13',  'F45',  'F67',  'F89',  'FBB',  'FDD',  'FFF' ]}], // tints
+    ['#801', { shades: [ '000',    '000',    '100',    '200',    '300',    '400',   '500',    '500',    '600',    '700',    '801' ]}], // shades
+    ['yellow', { complementary: [ 'Blue', 'yellow' ]}], // complementary
 ]
