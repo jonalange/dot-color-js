@@ -29,14 +29,35 @@ class AcceptedColors {
     }
 
     get paintKeys () {
-        return _removeFromArray(this.keys,['ral', 'rgbDecimal' , 'pantone', 'grayscale', 'hex3', 'hex4', 'rgba', 'yuv'])
+        const { keys } = this 
+        return _removeFromArray(keys,['ral', 'rgbDecimal' , 'pantone', 'grayscale', 'hex3', 'hex4', 'rgba', 'yuv'])
     }
 
     get sanitaryKeys () {
-        return _removeFromArray(this.keys,['isHex', 'hex', 'isHexVerbos']).sort(function(a, b){
+        const { keys } = this 
+        return _removeFromArray(keys,['isHex', 'hex', 'isHexVerbos']).sort(function(a, b){
             return b.length - a.length;
           })
     }
+
+    // get letters () {
+    //     let { keys } = this 
+    //     keys = _removeFromArray(keys,['pantone', 'grayscale', 'ral', 'rgbDecimal','html','yuv','lab','w'] )
+
+    //     let _letterOutput = {}
+    //     let _letter = keys.join('').replace(/([^a-z]|hex)/gi,'').split('')
+    //     _letter = _letter.filter((v, i, a) => a.indexOf(v) === i)
+
+    //     for(const a of _letter) {
+    //         for (const b of keys ) {
+    //             if (b.indexOf(a) > -1){
+    //                 _letterOutput[a] = b
+    //             }
+    //         }
+    //     }
+
+    //     return _letterOutput
+    // }
 }
 
 module.exports = AcceptedColors;

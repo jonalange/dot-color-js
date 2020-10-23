@@ -13,7 +13,7 @@ class indexColor {
         }
     }
 
-    fullindex(index, string) {
+    fullIndex(index, string) {
         if (string.indexOf(index) > -1) {
             const sanitizeRegex = (this.indexRegex[index]) ? this.indexRegex[index] : this.indexRegex.default
             return string.match(new RegExp(sanitizeRegex, 'g'))
@@ -55,7 +55,7 @@ class indexColor {
     abstractIndex(string, type) {
         let temp = []
 
-        temp = this.fullindex(type, string)
+        temp = this.fullIndex(type, string)
         if (temp && temp.length === type.length) {
             return temp
         }
