@@ -97,7 +97,7 @@ console.log(color.yuv) // {u: 90.26, v: 239.945, y: 81.535}
 
 ```
 
-If you want the accepted colors you have acces to this key
+If you want the accepted colors you have access to this key.
 
 ```javascript
 console.log(color.acceptedColors.keys) // [ 'cmyk',  'grayscale',  'hex3',  'hex4',  'hex6',  'hex8',  'html',  'hsl',  'hsv',  'lab',  'pantone',  'ral',  'rgb',  'rgba',  'rgbDecimal',  'w',  'xyz',  'yuv' ]

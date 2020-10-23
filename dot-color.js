@@ -157,6 +157,7 @@ class objectiveColor {
       });
 
       // http://blog.clickdimensions.com/understanding-color-theory-a-quick-overview-for-marketers/
+      // iro.js
 
       Object.defineProperty(this, "tones", {
         get() {

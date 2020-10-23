@@ -1,10 +1,16 @@
+
+
 const colorAbstract = require('../dot-color')
 
-const color = new colorAbstract('#123')
-// const color = new colorAbstract("red")
-// const color = new colorAbstract("red");
-// const color = new colorAbstract("RAL 1011");
+const color = new colorAbstract('ral 1000')
+console.log(color.analogous) 
 
-console.log(color.acceptedColors.letters)
-// console.log(color.acceptedColors.letters)
+/*
+
+[ { ral: 1006, name: 'Maize Yellow', lrv: 36 },
+  { ral: 1000, name: 'Green Beige', lrv: 50 },
+  { ral: 6019, name: 'Pastel Green', lrv: 57 } ]
+
+*/
+
 
