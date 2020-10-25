@@ -20,7 +20,6 @@ color.rgb = "rgb 10 60 240"
 color.rgb = {r: "10", g: "60", b: "240" }
 console.log(color.ral) // {lrv: 4, name: "Ultramarine Blue", ral: 5002}
 
-
 console.log(color.hex3) // "03F"
 console.log(color.hex8) // 0A3CF0FF"
 console.log(color.rgb) // {b: "240", g: "60", r: "10"}
@@ -29,10 +28,10 @@ console.log(color.cmyk) // {c: 96, k: 6, m: 75, y: 0}
 ```
 
 ## Features
-1 | [Identify](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#2--set-color) color values from string 
-2 | [Convert](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#4--accepted-colors) to any color format
-3 | Generate [color patterns](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#8--color-patterns)
-4 | Use [logical javascript design pattern](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#6--utility-keys) for custom color objects
+1 | [Identify](https://github.com/draganradu/dot-color-js/tree/master/documentation/dot_color_js_documentation.md#2--set-color) color values from string 
+2 | [Convert](https://github.com/draganradu/dot-color-js/tree/master/documentation/dot_color_js_documentation.md#4--accepted-colors) to any color format
+3 | Generate [color patterns](https://github.com/draganradu/dot-color-js/tree/master/documentation/dot_color_js_documentation.md#8--color-patterns)
+4 | Use [logical javascript design pattern](https://github.com/draganradu/dot-color-js/tree/master/documentation/dot_color_js_documentation.md#6--utility-keys) for custom color objects
 
 ## Supported colors
 The main thing we do better than any other color convertor is the ability to get any string and figure out if there is a color buried in there. We designed this package to be used behind an input field where the values can range from "RED" to "CMYK 30 20 10 5" and even "C 30 K 5 M 20 Y 10". The rule is: if you can read it as a color, we identify it as a valid color.

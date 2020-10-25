@@ -156,9 +156,6 @@ class objectiveColor {
         },
       });
 
-      // http://blog.clickdimensions.com/understanding-color-theory-a-quick-overview-for-marketers/
-      // iro.js
-
       Object.defineProperty(this, "tones", {
         get() {
           const { hsl, format } = this
@@ -252,10 +249,6 @@ class objectiveColor {
               }
             }
           }
-
-          // if( format === 'html' || format === 'pantone' || format === 'ral'){
-          //   _this.hslArray[1] === this.sanitizedColor
-          // }
 
           _this.buildArray()
           return _this.hslArray
