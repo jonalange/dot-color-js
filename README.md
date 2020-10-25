@@ -7,7 +7,7 @@
 This is a modernized version of [simple-color](https://www.npmjs.com/package/simple-color-converter) it uses modern JavaScript getters and setters and all sorts of JavaScript goodness to make one of the lightest but most feature dense color convertors for JavaScript you can find on NPM.
 
 ## Usage
-Use [link](https://github.com/draganradu/dot-color-js/blob/master/exemples/simple-color-object-exemple.md) for full documentation.
+Use [link](https://github.com/draganradu/dot-color-js/blob/master/documentation/dot_color_js_documentation.md) for full documentation.
 ```javascript
 
 const dotColor = require("dot-color")
@@ -28,8 +28,14 @@ console.log(color.cmyk) // {c: 96, k: 6, m: 75, y: 0}
 
 ```
 
+## Features
+1 | [Identify](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#2--set-color) color values from string 
+2 | [Convert](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#4--accepted-colors) to any color format
+3 | Generate [color patterns](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#8--color-patterns)
+4 | Use [logical javascript design pattern](https://github.com/draganradu/dot-color-js/blob/newideas/documentation/dot_color_js_documentation.md#6--utility-keys) for custom color objects
+
 ## Supported colors
-The main thing we do better then any other color convertor is the ability to get any string and figure out if there is a color buried in there. We designed this package to be used behind an input field where the values can range from "RED" to "CMYK 30 20 10 5" and even "C 30 K 5 M 20 Y 10". The rule is: if you can read it as a color we identify it as a valid color.
+The main thing we do better than any other color convertor is the ability to get any string and figure out if there is a color buried in there. We designed this package to be used behind an input field where the values can range from "RED" to "CMYK 30 20 10 5" and even "C 30 K 5 M 20 Y 10". The rule is: if you can read it as a color, we identify it as a valid color.
 
 [Accepted colors input test](exemple_color.md)
 
@@ -54,59 +60,12 @@ The main thing we do better then any other color convertor is the ability to get
 | xyz | { x: 44, y: 69, z: 45 } | [44, 69, 45] | 'xyz 44 69 45' |
 | yuv | { y: 180, u: 113.2, v: 73.5 } | [ 180, 113.2, 73.5 ] | 'yuv 180 113.2 73.5' |
 
-## Pattern Generator
-
-## Ambiguous Color
-We do not have a lot of ambiguous situations, we try to reduce them as possible, but due to the nature of string interpretation we have to default some time to a color.We want to be diligent and document all of the ambiguous colors that could cause colors.
-
-##### Pantone (shorthand) VS hex3 (shorthand)
-**100C** is hex3
-100C could be Pantone 100C or #100C. In this case it is more likely to be hex3 so we decided for the hex as long as there is no pantone key in the string.
-
-##### Grayscale 100 VS hex3 (no hash) 100
-**100** is grayscale
-100 could be Pantone 100C or hex #100 or grayscale 100. In this case we go to grayscale because it would completely exclude grayscale 100% 
-
-##### CMYK (shorthand) VS any 4 group shorthand.
-**10 30 40 10** is CMYK 
-We default any group of 4 to CMYK if there is no indication (keys) that it would be any other.
-
-##### RGB (shorthand) VS any 3 group shorthand.
-**10 30 40** is RGB
-We default any group of 4 to RGB if there is no indication (keys) that it would be any other.
-
-##### grayscale (shorthand) VS any 1 group shorthand.
-**10** is grayscale
-We default any group of 1 to grayscale if there is no indication (keys) that it would be any other.
-
-##### hex3 VS html.
-**black, Antique White, etc** is html
-There are 61 html colors that contain a hex valid pattern /[0-9a-f]{2}){4}|[0-9a-f]{2}){3}|([0-9a-f]){4}|([0-9a-f]){3}/gi in order to fix this any string that contains (?![hxo])[g-z] pattern will be excluded from being valid hex.
-
-## Other features
-```javascript
-
-const dotColor = require("dot-color")
-const color = new dotColor()
-
-color.cmyk = "cmyk 0 50 60 60"
-
-// the identified format
-console.log(color.format) // "cmyk"
-
-// the sanitized color
-console.log(color.sanitizedColor) // "{c: 0, k: 60, m: 50, y: 60}"
-
-
-
-```
-
 
 ## Contribute
 If there are any features you would like to support, or want to add it directly please send us a pull request. I`m more than happy.
 If you have any suggestions or you spotted an aberrant behavior or bugs, don't hesitate to send me an email. 
 
-There is only one rule, no braking changes
+There is only one rule, no breaking changes
 
 ## License
 Copyright © 2020, Radu Dragan. Licensed under the [MIT License](https://github.com/draganradu/dot-color-js/blob/master/LICENSE).

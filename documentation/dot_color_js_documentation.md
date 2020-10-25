@@ -1,5 +1,5 @@
 # Dot color Js | Documentation
-I will start by saying we will never add braking changes to this project. If there is something so spectacular that it needs breaking changes we will make a spin off of the project.
+I will start by saying we will never add breaking changes to this project. If there is something so spectacular that it needs breaking changes we will make a spin off of the project.
 There is a branch named [new ideas](https://github.com/draganradu/dot-color-js/tree/newideas) that contains possible new changes that could get into master soon if they are popular and reliable.
 This documentation will evolve if we add some new features but we will not have anything deprecated, ever.
 
@@ -25,7 +25,7 @@ console.log(redColor.html) // red
 [RunKit sandbox](https://npm.runkit.com/dot-color).
 
 ## 2 | Set color
-Because we use setter and getters you can initialize the class with no arguments and then just set the color by assigning a value to the correct key. The colors most be valid for that key, if you do not know what the correct key is just assigned it to the **color** key and the identify method will take care of it.
+Because we use setter and getters you can initialize the class with no arguments and then just set the color by assigning a value to the correct key. The colors must be valid for that key, if you do not know what the correct key is, just assigned it to the **color** key and the identify method will take care of it.
 
 ```javascript
 // init
@@ -41,6 +41,46 @@ const colorObject = new dotColor("rgb 255 0 0")
 console.log(colorObject.html) // red
 ```
 
+##### 2.1 | Set color string format sanitizer
+We worked hard to make the identify method identify almost any color buried deep inside a string, as a user would type in a search bar. Most people look at the diversity of the inputs examples and think this is overkill, but most user introduce data in a way that is easy for them, not us the data sanitizers. [exemple of tested data](https://github.com/draganradu/dot-color-js/blob/master/exemple_color.md) 
+
+```javascript
+const colorObject = new dotColor()
+
+colorObject.color = "cmyk 10 20 50 6"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+
+colorObject.color = "cMyk 10 20 50 6"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "10 20 50 6"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "10 20 50 6 cmyk"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "c: 10 m:20 y:50 k:6"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "m:20 k:6 c: 10 y:50"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "cmyk=39,0,39,7"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "cmyk(39 0 39 7)"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "cmyk(39,0,39,7)"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "cmyk(39/0/39/7)"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+
+colorObject.color = "cmyk(39;0;39;7)"
+console.log(colorObject.cmyk) //{c: 10, m: 20, y:50, k: 6}
+```
 
 ## 3 | Change color
 You can change the color at any time by setting a value to the color key or directly by assigning a value to any of the color keys (see accepted colors). 
@@ -70,7 +110,7 @@ console.log(colorObject.rgb) // {r: 121, g: 194, b: 218 }
 ```
 
 ## 4 | Accepted Colors
-All the colors are in a setter - getter key pair. The value set to a key will be identified, tested an the value will be sanitized.
+All the colors are in a **setter - getter** key pair. The value set to a key will be identified, tested an the value will be sanitized.
 
 ```javascript
 const dotColor = require("dot-color")
@@ -106,7 +146,7 @@ console.log(color.acceptedColors.keys) // [ 'cmyk',  'grayscale',  'hex3',  'hex
 ```
 
 ## 5 | Custom Color Format
-We looked at built in properties in JavaScript ( length for exemple ) and we added the same logic to colors. Everyone of the accepted colors has a custom type, it could be object, array, sting, number, boolean. It will have some common props that will make your life easy. 
+We looked at built-in properties in JavaScript ( length for exemple ) and we added the same logic to colors. Everyone of the accepted colors has a custom type, it could be object, array, sting, number, boolean. It will have some common props that will make your life easy. 
 
 ##### 5.1 | hex value
 We added this because most applications need to display the value just converted. Some conversions LAB to RAL have some inherit losses, this is a way of showing the a final color. 
@@ -253,8 +293,35 @@ console.log(color) // { format: 'hex3', sanitizedColor: '123' }
 ##### 9.2 | info
 (soon the method is not finished yet, will be present in future versions)
 
+## 10 | Ambiguous Color
+We do not have a lot of ambiguous situations, we try to reduce them as possible, but due to the nature of string interpretation we have to default some time to a color.We want to be diligent and document all of the ambiguous colors that could cause colors.
 
-## 10 | Common issues
+##### Pantone (shorthand) VS hex3 (shorthand)
+**100C** is hex3
+100C could be Pantone 100C or #100C. In this case it is more likely to be hex3 so we decided for the hex as long as there is no pantone key in the string.
+
+##### Grayscale 100 VS hex3 (no hash) 100
+**100** is grayscale
+100 could be Pantone 100C or hex #100 or grayscale 100. In this case we go to grayscale because it would completely exclude grayscale 100% 
+
+##### CMYK (shorthand) VS any 4 group shorthand.
+**10 30 40 10** is CMYK 
+We default any group of 4 to CMYK if there is no indication (keys) that it would be any other.
+
+##### RGB (shorthand) VS any 3 group shorthand.
+**10 30 40** is RGB
+We default any group of 4 to RGB if there is no indication (keys) that it would be any other.
+
+##### grayscale (shorthand) VS any 1 group shorthand.
+**10** is grayscale
+We default any group of 1 to grayscale if there is no indication (keys) that it would be any other.
+
+##### hex3 VS html.
+**black, Antique White, etc** is html
+There are 61 html colors that contain a hex valid pattern /[0-9a-f]{2}){4}|[0-9a-f]{2}){3}|([0-9a-f]){4}|([0-9a-f]){3}/gi in order to fix this any string that contains (?![hxo])[g-z] pattern will be excluded from being valid hex.
+
+
+## 11 | Common issues
 Setting wrong format.
 ```javascript
 const simpleColor = require('simple_color_object');
