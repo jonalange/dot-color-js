@@ -359,7 +359,7 @@ const colorConvert = {
 
         rgb: function (lab) {
             const xyz = { x: 0, y: 0, z: 0 }
-    
+            
             xyz.y = (lab.L + 16) / 116
             xyz.x = lab.a / 500 + xyz.y
             xyz.z = xyz.y - lab.b / 200
