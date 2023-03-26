@@ -359,29 +359,29 @@ const colorConvert = {
 
         rgb: function (lab) {
             const xyz = { x: 0, y: 0, z: 0 }
-            
+
             xyz.y = (lab.L + 16) / 116
             xyz.x = lab.a / 500 + xyz.y
             xyz.z = xyz.y - lab.b / 200
-    
+
             const ref_X = 95.047
             const ref_Y = 100.000
             const ref_Z = 108.883
-    
+
             xyz.x = ref_X * ((xyz.x ** 3 > 0.008856) ? xyz.x ** 3 : (xyz.x - 16 / 116) / 7.787)
             xyz.y = ref_Y * ((xyz.y ** 3 > 0.008856) ? xyz.y ** 3 : (xyz.y - 16 / 116) / 7.787)
             xyz.z = ref_Z * ((xyz.z ** 3 > 0.008856) ? xyz.z ** 3 : (xyz.z - 16 / 116) / 7.787)
-    
+
             const rgb = { r: 0, g: 0, b: 0 }
             rgb.r = xyz.x * 3.2406 + xyz.y * -1.5372 + xyz.z * -0.4986
             rgb.g = xyz.x * -0.9689 + xyz.y * 1.8758 + xyz.z * 0.0415
             rgb.b = xyz.x * 0.0557 + xyz.y * -0.2040 + xyz.z * 1.0570
-    
+
             for (const i of 'rgb') {
                 rgb[i] = (rgb[i] > 0.0031308) ? (1.055 * Math.pow(rgb[i], 1 / 2.4) - 0.055) : 12.92 * rgb[i]
                 rgb[i] = Math.round(Math.max(0, Math.min(1, rgb[i])) * 255)
             }
-    
+
             return rgb
         }
     },
