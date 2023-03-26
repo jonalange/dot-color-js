@@ -93,7 +93,7 @@ class colorHelper {
 
     abstractMakeInt(a, b = 100) {
         if (typeof a === 'string') {
-            let aClean = parseFloat(a.replace(/[^0-9,.]/g, ''))
+            let aClean = parseFloat(a.replace(/[^0-9-,.]/g, ''))
 
             if (a.indexOf('%') > -1) {
                 return (aClean / 100) * b
@@ -117,12 +117,18 @@ class colorHelper {
             raw = this.arrayToObject(raw, colorKey)
         }
         if (typeof raw === 'object') {
-
             for (const i of colorKey) {
                 if (!raw[i]) {
                     return false
                 } else {
                     raw[i] = this.abstractMakeInt(raw[i])
+
+                    // handle negative LAB values
+                    if (i === 'l' || i === 'a' || i === 'b') {
+                        if (Math.sign(raw[i]) === -1) {
+                            raw[i] = 0 - Math.abs(raw[i])
+                        }
+                    }
                 }
             }
 
@@ -201,8 +207,20 @@ class abstractSanitizer extends colorHelper {
     }
 
     get lab() {
-        return this.abastractKey('lab')
-    }
+        let { raw } = this
+        if (typeof raw === 'string') {
+          const labRegex = /lab\s+([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)/i
+          const matches = raw.match(labRegex)
+          if (matches) {
+            return {
+              L: parseFloat(matches[1]),
+              a: parseFloat(matches[2]),
+              b: parseFloat(matches[3])
+            }
+          }
+        }
+        return false
+      }
 
     get pantone() {
         let { raw } = this
