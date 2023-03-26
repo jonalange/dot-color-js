@@ -117,8 +117,8 @@ class colorHelper {
             raw = this.arrayToObject(raw, colorKey)
         }
         if (typeof raw === 'object') {
+            
             for (const i of colorKey) {
-                
                 if (!raw[i]) {
                     return false
                 } else {
