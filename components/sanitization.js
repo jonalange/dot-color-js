@@ -123,8 +123,6 @@ class colorHelper {
                     return false
                 } else {
                     raw[i] = this.abstractMakeInt(raw[i])
-
-                    // handle negative LAB values
                     if (i === 'l' || i === 'a' || i === 'b') {
                         if (Math.sign(raw[i]) === -1) {
                             raw[i] = 0 - Math.abs(raw[i])
